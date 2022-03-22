@@ -2,6 +2,7 @@
 // 여러 소스들을 이 app.js 파일 하나로 합치는걸 도와주는 게 webpack!!
 
 const path = require('path'); // Node에서 경로 조작할 수 있게 해주는건데 그냥 외우자!!
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'); // 이건 개발할 때 매번 빌드하지 않아도 알아서 새로고침 해주는 플러그인
 
 module.exports = {
     name: 'wordrelay-setting', // 이름 원하는걸로
@@ -21,14 +22,33 @@ module.exports = {
         test: /\.jsx?/, // js나 jsx 파일에 적용. 정규식 공부
         loader: 'babel-loader',
         options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+                ['@babel/preset-env',{
+                    targets: {
+                        browsers: ['> 5% in KR'], // 앞에껀 KR에서 점유율 5%이상 browerslist 사이트 들어가면 옵션 더 볼 수 있음
+                    },
+                    debug: true,
+                }],
+                '@babel/preset-react',
+        ],
+        plugins: [
+            'react-refresh/babel',
+        ]
         }
        }] ,
     }, // entry 파일을 읽고 module 적용 후 output에 뺀다..
-
+    plugins: [
+        new RefreshWebpackPlugin()
+    ],
     output : {
         path: path.join(__dirname, 'dist'), // __dirname은 현재 디렉토리이고, 현 디렉토리 안에있는 dist라는 폴더와 경로 합치는 명령어 (path.join)
-        filename: 'app.js' // 출력 원하는 파일 이름
+        filename: 'app.js', // 출력 원하는 파일 
+        publicPath: '/dist/',
     }, // 출력
+    devServer: { // 이 부분이 webpack 버전 올라갈수록 바뀌네..
+        devMiddleware: {publicPath: '/dist/'},
+        static: { directory: path.resolve(__dirname) },
+        hot: true,
+    }
 
 };
