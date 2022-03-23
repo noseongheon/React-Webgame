@@ -8,7 +8,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import NumberBaseball from './NumberBaseball';
+// import NumberBaseball from './NumberBaseball';
+import NumberBaseball from './RenderTest';
 
 
 // const WordRelay = require('./WordRelay');

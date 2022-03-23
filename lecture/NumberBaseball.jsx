@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import Try from './Try';
 
 function getNumbers() { // 숫자 4개 랜덤하게 뽑는 함수 (겹치지 않고)
@@ -48,11 +48,12 @@ class NumberBaseball extends Component {
                 }
             });
             alert('게임을 다시 시작합니다!');
-                this.setState({
-                    value: '',
-                    answer: getNumbers(),
-                    tries: [],
-                });
+            this.setState({
+                value: '',
+                answer: getNumbers(),
+                tries: [],
+            });
+            this.inputRef.current.focus();
         }else{
             const answerArray = value.split('').map((v) => parseInt(v));
             let strike = 0;
@@ -67,6 +68,7 @@ class NumberBaseball extends Component {
                     answer: getNumbers(),
                     tries: [],
                 });
+                this.inputRef.current.focus();
             }else{
                 for (let i = 0; i<4; i++){
                     if (answerArray[i] === answer[i]){
@@ -80,8 +82,8 @@ class NumberBaseball extends Component {
                         tries: [...prevState.tries, {try: value, result: `${strike} 스트라이크, ${ball} 볼`}],
                         value: '',
                     }
-                    
-                })
+                });
+                this.inputRef.current.focus();
             }
         }
     };
@@ -93,6 +95,8 @@ class NumberBaseball extends Component {
         })
     };
 
+    inputRef = createRef();
+
     render() {
 
         const {result, value, tries} = this.state;
@@ -101,7 +105,7 @@ class NumberBaseball extends Component {
             <>
                 <h1>{result}</h1>
                 <form onSubmit={this.onSubmitForm}>
-                    <input maxLength={4} value={value} onChange={this.onChangeInput} />
+                    <input ref={this.inputRef} maxLength={4} value={value} onChange={this.onChangeInput} />
                 </form>
                 <div>시도: {tries.length}</div>
                 <ul>
