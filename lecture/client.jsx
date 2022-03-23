@@ -1,6 +1,17 @@
-const React = require('react');
-const ReactDom = require('react-dom');
+// const React = require('react');
+// const ReactDom = require('react-dom');
+// const { hot } = require('react-hot-loader/root');
+// const NumberBaseball = require('./NumberBaseball');
 
-const WordRelay = require('./WordRelay');
+// 위에처럼 쓸 수도 있고, import로 쓸수도 있음
 
-ReactDom.render(<WordRelay />, document.querySelector('#root'));
+import React from 'react';
+import ReactDom from 'react-dom';
+
+import NumberBaseball from './NumberBaseball';
+
+
+// const WordRelay = require('./WordRelay');
+
+
+ReactDom.render(<NumberBaseball />, document.querySelector('#root'));

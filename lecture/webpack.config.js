@@ -33,6 +33,7 @@ module.exports = {
         ],
         plugins: [
             'react-refresh/babel',
+            'react-hot-loader/babel'
         ]
         }
        }] ,
